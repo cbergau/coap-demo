@@ -2,10 +2,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Set;
 
 import org.eclipse.californium.core.CoapClient;
 import org.eclipse.californium.core.CoapResponse;
 import org.eclipse.californium.core.Utils;
+import org.eclipse.californium.core.WebLink;
 
 public class DemoApplication {
     public static void main(String... args) {
@@ -15,7 +17,7 @@ public class DemoApplication {
 
             // input URI from command line arguments
             try {
-                uri = new URI(args[0]);
+                uri = new URI(args[0] + "/hello");
             } catch (URISyntaxException e) {
                 System.err.println("Invalid URI: " + e.getMessage());
                 System.exit(-1);
@@ -23,6 +25,7 @@ public class DemoApplication {
 
             CoapClient client = new CoapClient(uri);
             CoapResponse response = client.get();
+            Set<WebLink> testResult = client.discover();
 
             if (response != null) {
 
